@@ -1,0 +1,114 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #ffcb05;
+    text-shadow: 1px 1px 2px #3b4cca;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #3b4cca;
+    outline: none;
+}
+
+button {
+    background-color: #3b4cca;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #2a2fa4;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#confirmPassword {
+    margin-top: 15px; /* Adjust this value for more spacing */
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Space for the eye icon */
+    box-sizing: border-box;
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+}
+
+.toggle-password:hover {
+    color: #3b4cca;
+}
+
+/* Hide password requirements initially */
+#password-requirements {
+    display: none; /* Hidden by default */
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}
+
+/* Make valid rules turn green */
+#password-requirements li.valid {
+    color: green;
+}
