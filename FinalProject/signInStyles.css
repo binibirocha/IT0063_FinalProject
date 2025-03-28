@@ -157,3 +157,21 @@ button:disabled {
         right: 12px;
     }
 }
+
+/* Sign-in text below register button */
+.signin-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.signin-link {
+    color: #3b4cca;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signin-link:hover {
+    color: #2a2fa4;
+    text-decoration: underline;
+}
