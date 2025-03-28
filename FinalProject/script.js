@@ -1,7 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     const playerIDInput = document.getElementById("playerID");
+    const emailInput = document.getElementById("email");
+    const ignInput = document.getElementById("ign");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const passwordRequirements = document.getElementById("password-requirements");
+    const passwordMatchMsg = document.getElementById("password-match-msg");
+    const registerButton = document.querySelector("button[type='submit']"); // Fixed reference to the button
 
-    // Function to generate a random Player ID in the format #### #### ####
     function generatePlayerID() {
         return (
             Math.floor(1000 + Math.random() * 9000) + " " +
@@ -19,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function togglePassword(inputID, iconID) {
         let input = document.getElementById(inputID);
         let icon = document.getElementById(iconID);
-    
+
         if (input.type === "password") {
             input.type = "text";
             icon.classList.remove("fa-eye");
@@ -32,14 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.togglePassword = togglePassword;
-    
-    // Password validation UI
-    const passwordInput = document.getElementById("password");
-    const confirmPasswordInput = document.getElementById("confirmPassword");
-    const passwordRequirements = document.getElementById("password-requirements");
-    const passwordMatchMsg = document.getElementById("password-match-msg");
 
-    // Password requirement elements
     const reqLength = document.getElementById("req-length");
     const reqUppercase = document.getElementById("req-uppercase");
     const reqLowercase = document.getElementById("req-lowercase");
@@ -70,18 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
         reqSpecial.classList.toggle("valid", specialValid);
         reqSpecial.innerHTML = specialValid ? "✅ At least one special character (@, #, $, etc.)" : "❌ At least one special character (@, #, $, etc.)";
 
-        // Hide password requirements if all are met
-        if (lengthValid && uppercaseValid && lowercaseValid && numberValid && specialValid) {
-            passwordRequirements.style.display = "none";
-        } else {
-            passwordRequirements.style.display = "block";
-        }
+        // 🔹 Hide password requirements if all conditions are met
+        passwordRequirements.style.display = (lengthValid && uppercaseValid && lowercaseValid && numberValid && specialValid) ? "none" : "block";
+
+        validateForm(); // 🔹 Check if the form is valid
     }
 
-    // Show password requirements only when typing
     passwordInput.addEventListener("input", checkPasswordRequirements);
 
-    // Password match validation
     confirmPasswordInput.addEventListener("input", function () {
         if (confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value !== "") {
             passwordMatchMsg.style.color = "green";
@@ -92,61 +87,29 @@ document.addEventListener("DOMContentLoaded", function () {
             passwordMatchMsg.innerHTML = "❌ Passwords do not match!";
             passwordMatchMsg.style.display = "block";
         }
+
+        validateForm(); // 🔹 Call form validation check
     });
 
-    // Hide password match message when user clicks outside
     confirmPasswordInput.addEventListener("blur", function () {
         passwordMatchMsg.style.display = "none";
     });
 
-    // Form submission event
-    document.getElementById("registrationForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+    function validateForm() {
+        const passwordValid = reqLength.classList.contains("valid") &&
+                              reqUppercase.classList.contains("valid") &&
+                              reqLowercase.classList.contains("valid") &&
+                              reqNumber.classList.contains("valid") &&
+                              reqSpecial.classList.contains("valid");
 
-        const email = document.getElementById("email").value.trim();
-        const password = passwordInput.value.trim();
-        const confirmPassword = confirmPasswordInput.value.trim();
-        const ign = document.getElementById("ign").value.trim();
+        const passwordsMatch = confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value !== "";
 
-        // Email validation
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
+        const emailValid = emailInput.value.trim() !== "";
+        const ignValid = ignInput.value.trim() !== "";
 
-        // Password validation
-        const passwordIsValid = password.length >= 8 &&
-                                /[A-Z]/.test(password) &&
-                                /[a-z]/.test(password) &&
-                                /\d/.test(password) &&
-                                /[@$!%*?&]/.test(password);
+        registerButton.disabled = !(passwordValid && passwordsMatch && emailValid && ignValid); // Enable/Disable button
+    }
 
-        if (!passwordIsValid) {
-            alert("Password does not meet the requirements.");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
-
-        // IGN validation
-        if (ign === "") {
-            alert("Please enter your In-Game Name (IGN).");
-            return;
-        }
-
-        // Store user data in local storage
-        const userData = {
-            email: email,
-            password: password, // In real-world apps, never store passwords in plain text
-            playerID: playerIDInput.value,
-            ign: ign
-        };
-
-        localStorage.setItem("user", JSON.stringify(userData));
-        alert("Registration successful!");
-    });
+    emailInput.addEventListener("input", validateForm);
+    ignInput.addEventListener("input", validateForm);
 });
