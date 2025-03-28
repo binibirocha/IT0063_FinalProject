@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value !== "") {
             passwordMatchMsg.style.color = "green";
             passwordMatchMsg.innerHTML = "✅ Passwords match!";
-            setTimeout(() => { passwordMatchMsg.style.display = "none"; }, 1000); // Hide after 1 sec
+            passwordMatchMsg.style.display = "block";
         } else {
             passwordMatchMsg.style.color = "red";
             passwordMatchMsg.innerHTML = "❌ Passwords do not match!";
@@ -94,8 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Hide password match message when user clicks outside
+    confirmPasswordInput.addEventListener("blur", function () {
+        passwordMatchMsg.style.display = "none";
+    });
+
     // Form submission event
-    document.getElementById("registration-form").addEventListener("submit", function (event) {
+    document.getElementById("registrationForm").addEventListener("submit", function (event) {
         event.preventDefault();
 
         const email = document.getElementById("email").value.trim();
