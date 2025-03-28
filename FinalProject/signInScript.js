@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPasswordInput = document.getElementById("confirmPassword");
     const passwordRequirements = document.getElementById("password-requirements");
     const passwordMatchMsg = document.getElementById("password-match-msg");
-    const registerButton = document.querySelector("button[type='submit']"); // Fixed reference to the button
+    const registerButton = document.querySelector("button[type='submit']");
 
+    // Function to generate a random Player ID
     function generatePlayerID() {
         return (
             Math.floor(1000 + Math.random() * 9000) + " " +
@@ -16,12 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
+    // Auto-fill Player ID field
     if (playerIDInput) {
         playerIDInput.value = generatePlayerID();
     } else {
         console.error("Player ID input field not found!");
     }
 
+    // Function to toggle password visibility
     function togglePassword(inputID, iconID) {
         let input = document.getElementById(inputID);
         let icon = document.getElementById(iconID);
@@ -39,12 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.togglePassword = togglePassword;
 
+    // Password validation elements
     const reqLength = document.getElementById("req-length");
     const reqUppercase = document.getElementById("req-uppercase");
     const reqLowercase = document.getElementById("req-lowercase");
     const reqNumber = document.getElementById("req-number");
     const reqSpecial = document.getElementById("req-special");
 
+    // Function to check password requirements
     function checkPasswordRequirements() {
         const password = passwordInput.value;
 
@@ -69,14 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
         reqSpecial.classList.toggle("valid", specialValid);
         reqSpecial.innerHTML = specialValid ? "✅ At least one special character (@, #, $, etc.)" : "❌ At least one special character (@, #, $, etc.)";
 
-        // 🔹 Hide password requirements if all conditions are met
         passwordRequirements.style.display = (lengthValid && uppercaseValid && lowercaseValid && numberValid && specialValid) ? "none" : "block";
 
-        validateForm(); // 🔹 Check if the form is valid
+        validateForm();
     }
 
     passwordInput.addEventListener("input", checkPasswordRequirements);
 
+    // Check password match
     confirmPasswordInput.addEventListener("input", function () {
         if (confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value !== "") {
             passwordMatchMsg.style.color = "green";
@@ -88,13 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
             passwordMatchMsg.style.display = "block";
         }
 
-        validateForm(); // 🔹 Call form validation check
+        validateForm();
     });
 
     confirmPasswordInput.addEventListener("blur", function () {
         passwordMatchMsg.style.display = "none";
     });
 
+    // Validate form before enabling register button
     function validateForm() {
         const passwordValid = reqLength.classList.contains("valid") &&
                               reqUppercase.classList.contains("valid") &&
@@ -107,9 +113,64 @@ document.addEventListener("DOMContentLoaded", function () {
         const emailValid = emailInput.value.trim() !== "";
         const ignValid = ignInput.value.trim() !== "";
 
-        registerButton.disabled = !(passwordValid && passwordsMatch && emailValid && ignValid); // Enable/Disable button
+        registerButton.disabled = !(passwordValid && passwordsMatch && emailValid && ignValid);
     }
 
     emailInput.addEventListener("input", validateForm);
     ignInput.addEventListener("input", validateForm);
+
+    // 🔹 Save Registration Data to Local Storage & Redirect to Login
+    document.getElementById("registrationForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const ign = ignInput.value.trim();
+
+        // Check if IGN is already taken
+        if (localStorage.getItem(ign)) {
+            alert("This IGN is already taken. Please choose another.");
+            return;
+        }
+
+        const userData = {
+            playerID: playerIDInput.value,
+            email: emailInput.value,
+            ign: ign,
+            password: passwordInput.value
+        };
+
+        // Save user with IGN as the key
+        localStorage.setItem(ign, JSON.stringify(userData));
+
+        alert("Registration successful! Redirecting to login...");
+        window.location.href = "logIn.html";
+    });
+
+    // 🔹 Login Form Validation
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const ign = document.getElementById("ign").value.trim();
+        const password = document.getElementById("password").value;
+
+        console.log("Attempting login with IGN:", ign); // Debugging line
+
+        const storedUser = localStorage.getItem(ign);
+
+        if (!storedUser) {
+            alert("❌ Username not found. Please register first.");
+            return;
+        }
+
+        const userData = JSON.parse(storedUser);
+
+        console.log("Stored User Data:", userData); // Debugging line
+
+        if (password !== userData.password) {
+            alert("❌ Incorrect password. Please try again.");
+            return;
+        }
+
+        alert(`✅ Login successful! Welcome back, ${ign}.`);
+        window.location.href = "dashboard.html"; // Redirect after successful login
+    });
 });
