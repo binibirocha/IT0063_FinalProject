@@ -5,6 +5,11 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    background: radial-gradient(circle, rgba(255, 221, 87, 0.6) 10%, rgba(40, 80, 160, 0.9) 80%);
+    min-height: 100vh; /* Ensures full screen height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
@@ -14,12 +19,13 @@ body {
     padding: 20px;
     margin: 50px auto;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 221, 87, 0.7); /* Soft yellow glow */
 }
 
 h1 {
     color: #ffcb05;
-    text-shadow: 1px 1px 2px #3b4cca;
+    text-shadow: 0px 0px 8px rgba(255, 221, 87, 0.8);
 }
 
 form {
@@ -33,11 +39,12 @@ label {
 }
 
 input {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 input:focus {

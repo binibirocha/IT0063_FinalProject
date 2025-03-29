@@ -1,0 +1,111 @@
+/* Global Styles */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #eef5fc, #85c9ff);
+}
+
+/* Full Page Layout */
+.profile-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Header */
+header {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background: #1e88e5;
+    color: white;
+}
+
+/* Horizontal Card Layout */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+/* Profile, Stats, Favorites, Settings - All Cards */
+.profile-card, .stats, .favorites, .settings {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 260px;
+    min-height: 250px;
+}
+
+/* Avatar */
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+/* PokéCoins */
+.poke-coins {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+/* Pokémon Carousel */
+.carousel {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+/* Settings Buttons */
+.settings button {
+    background: #1e88e5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+}
+
+.settings button:hover {
+    background: #1565c0;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    background: #1e88e5;
+    color: white;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-card, .stats, .favorites, .settings {
+        width: 90%;
+    }
+}
