@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon GO - Profile</title>
+    <title>Trainer Profile</title>
     <link rel="stylesheet" href="profileStyles.css">
 </head>
 <body>
-
     <div class="profile-page">
-        <!-- Header -->
         <header>
             <h1>Trainer Profile</h1>
         </header>
-
-        <!-- Main Profile Section -->
+        
         <main class="profile-container">
-            <!-- Profile Card -->
-            <section class="profile-card">
-                <img src="avatar.png" alt="Trainer Avatar" class="avatar">
-                <h2>Trainer Name</h2>
-                <p>Level 10</p>
-                <p class="poke-coins">PokéCoins: 500</p>
+            <section class="profile-header">
+                <img src="trainer.jpg" alt="Trainer Avatar" class="avatar">
+                <div class="trainer-details">
+                    <h2>Trainer Name</h2>
+                    <p>Level 10</p>
+                    <p class="poke-coins">PokéCoins: 500</p>
+                </div>
             </section>
 
-            <!-- Stats Section -->
             <section class="stats">
                 <h3>Stats & Achievements</h3>
                 <ul>
@@ -34,28 +31,39 @@
                 </ul>
             </section>
 
-            <!-- Favorite Pokémon -->
             <section class="favorites">
                 <h3>Favorite Pokémon</h3>
-                <div class="carousel">
+                <div class="favorite-list">
                     <img src="pikachu.png" alt="Pikachu">
                     <img src="charizard.png" alt="Charizard">
                     <img src="gengar.png" alt="Gengar">
                 </div>
             </section>
 
-            <!-- Settings -->
             <section class="settings">
                 <button>Change Avatar</button>
-                <button>Sign Out</button>
+                <button onclick="logout()">Sign Out</button>
+                <button id="deleteAccountButton" class="delete-btn">Delete Account</button>
             </section>
         </main>
 
-        <!-- Footer -->
+        <!-- Custom Alert Box -->
+        <div id="alertOverlay"></div>
+        <div id="customAlert">
+            <p id="alertMessage"></p>
+            <div class="alert-buttons">
+                <button id="alertOkButton">OK</button>
+                <button id="alertCancelButton">Cancel</button>
+            </div>
+        </div>
+
         <footer>
             <p>© 2025 Pokémon GO Web Store</p>
         </footer>
     </div>
 
+    <script src="profileScript.js"></script>
 </body>
 </html>
+
+  
